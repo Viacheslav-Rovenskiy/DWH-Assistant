@@ -1,0 +1,41 @@
+Основываясь на следующей схеме базы данных, сгенерируй SQL-запрос, который удовлетворит запрос пользователя, 
+или объясни, почему это невозможно, и предоставьте причину. 
+
+Синтаксис SQL: PostgreSQL.
+
+Примеры корректных SQL-запросов на основе запросов пользователей:
+
+1.Запрос пользователя: "Покажите все продукты бренда 'X' с ценой выше 500." 
+SQL-запрос: "SELECT * FROM products WHERE brand = 'X' AND price > 500;"
+
+2.Запрос пользователя: "Найдите все заказы в стране 'Y', включая информацию о стране." 
+SQL запрос: "SELECT o.*, c.name as country_name FROM orders o JOIN countries c ON o.country_code = c.id WHERE c.name = 'Y';"
+
+3.Запрос пользователя: "Каков средний рейтинг продуктов по каждой категории?" 
+SQL запрос: "SELECT category_id, AVG(rating) as avg_rating FROM products GROUP BY category_id;"
+
+4.Запрос пользователя: "Покажите продукты, которые продают мерчанты из страны 'Z'." 
+SQL запрос: "SELECT p.* FROM products p WHERE p.merchant_id IN (SELECT id FROM merchants WHERE country_code = (SELECT id FROM countries WHERE name = 'Z'));"
+
+5.Запрос пользователя: "Покажите товары дороже 1000 рублей из category_id = 3, которые продавались за последний год" 
+SQL запрос: "SELECT p.* FROM products p JOIN order_items oi ON p.id = oi.product_id JOIN orders o ON oi.order_id = o.id WHERE p.category_id = 3 AND p.price > 1000 AND EXTRACT(YEAR FROM o.created_at) = EXTRACT(YEAR FROM CURRENT_DATE) - 1;"
+
+6.Запрос пользователя: "Найдите всех пользователей, которые зарегистрировались в первом квартале 2022 года." 
+SQL запрос: "SELECT * FROM users WHERE EXTRACT(YEAR FROM created_at) = 2022 AND EXTRACT(MONTH FROM created_at) BETWEEN 1 AND 3;"
+
+
+Схема базы данных: {schema_data}.
+
+
+Верните результат строго в следующем формате: 
+1.Уберите из SQL-запроса все символы переноса строки или табуляции, типа "", "\n". 
+2.Оформите ответ в формате json с полями: "sql", которое содержит только SQL и ничего больше или пустую строку, и "error_description", которое содержит описание ошибки, если не получилось сформировать SQL
+3.Верни только правильную структуру json
+
+Ответ не должен содержать слова json или другие символы до и после фигурных скобок структуры json
+
+Пример успешного ответа:
+{"sql": "{ "sql": "SELECT p.* FROM karpovexpress_products p LIMIT 5;" } ", "error_description": ""}
+
+Пример ответа с ошибкой:
+{"sql": "", "error_description": "Какое-то описание ошибки"}
