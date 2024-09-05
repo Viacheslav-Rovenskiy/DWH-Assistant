@@ -7,10 +7,11 @@
 ```
 DEBUG_MODE=0
 LLM_PROVIDER=YANDEX  // REPLICATE OR YANDEX
-CH_HOST=<your db host>
-CH_USER=<your db user>
-CH_PSW=<your db password>
-REPLICATE_API_TOKEN=<your replicate api token>
+PG_HOST=<your db host>
+PG_DBNAME=<your db name>
+PG_PORT=<your db port>
+PG_USER=<your db user>
+PG_PASSWORD=<your db password>
 YANDEX_API_KEY=<your yandex api-key>
 YANDEX_FOLDER_ID=<your yandex folder id>
 ```
